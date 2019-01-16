@@ -1,7 +1,3 @@
-package bonjour;
-
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,44 +7,44 @@ public class Solution {
 
 
 
-        input = "{\n" +
-                "    \"bascule\" : [\"IN1\", \"IN2\", \"OUT1\", \"OUT2\"],\n" +
-                "    \"logique\" : [\n" +
-                "        {\"nom\" : \"F1\",   \"delais\" : 12},\n" +
-                "        {\"nom\" : \"F2\",   \"delais\" : 12},\n" +
-                "        {\"nom\" : \"F3\",   \"delais\" : 12},\n" +
-                "        {\"nom\" : \"F4\",   \"delais\" : 12},\n" +
-                "        {\"nom\" : \"XOR1\", \"delais\" :  4},\n" +
-                "        {\"nom\" : \"XOR2\", \"delais\" :  4},\n" +
-                "        {\"nom\" : \"XOR3\", \"delais\" :  4},\n" +
-                "        {\"nom\" : \"XOR4\", \"delais\" :  4}\n" +
-                "    ],\n" +
-                "    \"fils\" : [\n" +
-                "        {\"in\" : \"IN1\",  \"out\" : \"F1\",   \"delais\" : 1},\n" +
-                "        {\"in\" : \"IN2\",  \"out\" : \"XOR1\", \"delais\" : 1},\n" +
-                "        {\"in\" : \"F1\",   \"out\" : \"XOR1\", \"delais\" : 1},\n" +
-                "        {\"in\" : \"XOR1\", \"out\" : \"F2\",   \"delais\" : 1},\n" +
-                "        {\"in\" : \"IN1\",  \"out\" : \"XOR2\", \"delais\" : 1},\n" +
-                "        {\"in\" : \"F2\",   \"out\" : \"XOR2\", \"delais\" : 1},\n" +
-                "        {\"in\" : \"XOR2\", \"out\" : \"F3\",   \"delais\" : 1},\n" +
-                "        {\"in\" : \"XOR1\", \"out\" : \"XOR3\", \"delais\" : 1},\n" +
-                "        {\"in\" : \"F3\",   \"out\" : \"XOR3\", \"delais\" : 1},\n" +
-                "        {\"in\" : \"XOR3\", \"out\" : \"F4\",   \"delais\" : 1},\n" +
-                "        {\"in\" : \"XOR2\", \"out\" : \"XOR4\", \"delais\" : 1},\n" +
-                "        {\"in\" : \"F4\",   \"out\" : \"XOR4\", \"delais\" : 1},\n" +
-                "        {\"in\" : \"XOR3\", \"out\" : \"OUT1\", \"delais\" : 1},\n" +
-                "        {\"in\" : \"XOR4\", \"out\" : \"OUT2\", \"delais\" : 1}\n" +
-                "    ]\n" +
-                "}";
+//        input = "{\n" +
+//                "    \"bascule\" : [\"IN1\", \"IN2\", \"OUT1\", \"OUT2\"],\n" +
+//                "    \"logique\" : [\n" +
+//                "        {\"nom\" : \"F1\",   \"delais\" : 12},\n" +
+//                "        {\"nom\" : \"F2\",   \"delais\" : 12},\n" +
+//                "        {\"nom\" : \"F3\",   \"delais\" : 12},\n" +
+//                "        {\"nom\" : \"F4\",   \"delais\" : 12},\n" +
+//                "        {\"nom\" : \"XOR1\", \"delais\" :  4},\n" +
+//                "        {\"nom\" : \"XOR2\", \"delais\" :  4},\n" +
+//                "        {\"nom\" : \"XOR3\", \"delais\" :  4},\n" +
+//                "        {\"nom\" : \"XOR4\", \"delais\" :  4}\n" +
+//                "    ],\n" +
+//                "    \"fils\" : [\n" +
+//                "        {\"in\" : \"IN1\",  \"out\" : \"F1\",   \"delais\" : 1},\n" +
+//                "        {\"in\" : \"IN2\",  \"out\" : \"XOR1\", \"delais\" : 1},\n" +
+//                "        {\"in\" : \"F1\",   \"out\" : \"XOR1\", \"delais\" : 1},\n" +
+//                "        {\"in\" : \"XOR1\", \"out\" : \"F2\",   \"delais\" : 1},\n" +
+//                "        {\"in\" : \"IN1\",  \"out\" : \"XOR2\", \"delais\" : 1},\n" +
+//                "        {\"in\" : \"F2\",   \"out\" : \"XOR2\", \"delais\" : 1},\n" +
+//                "        {\"in\" : \"XOR2\", \"out\" : \"F3\",   \"delais\" : 1},\n" +
+//                "        {\"in\" : \"XOR1\", \"out\" : \"XOR3\", \"delais\" : 1},\n" +
+//                "        {\"in\" : \"F3\",   \"out\" : \"XOR3\", \"delais\" : 1},\n" +
+//                "        {\"in\" : \"XOR3\", \"out\" : \"F4\",   \"delais\" : 1},\n" +
+//                "        {\"in\" : \"XOR2\", \"out\" : \"XOR4\", \"delais\" : 1},\n" +
+//                "        {\"in\" : \"F4\",   \"out\" : \"XOR4\", \"delais\" : 1},\n" +
+//                "        {\"in\" : \"XOR3\", \"out\" : \"OUT1\", \"delais\" : 1},\n" +
+//                "        {\"in\" : \"XOR4\", \"out\" : \"OUT2\", \"delais\" : 1}\n" +
+//                "    ]\n" +
+//                "}";
 
 
-//
-//        input = "";
-//        Scanner scan = new Scanner(System.in);
-//
-//        while (scan.hasNextLine()) {
-//            input += scan.nextLine() + "\n";
-//        }
+
+        input = "";
+        Scanner scan = new Scanner(System.in);
+
+        while (scan.hasNextLine()) {
+            input += scan.nextLine() + "\n";
+        }
 
         new Solution(input);
 
