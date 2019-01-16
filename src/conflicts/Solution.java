@@ -1,5 +1,6 @@
 package conflicts;
 
+import java.awt.Rectangle;
 import java.util.*;
 
 
@@ -13,23 +14,21 @@ public class Solution {
         }
 
 
-
-//        String string = "2\n" +
-//                "INF1005C Lundi 12:45 Lundi 13:35\n" +
-//                "INF1500 Mardi 14:45 Mardi 17:35";
+//        string = "2\n" +
+//                "INF1005C Lundi 0:0 Lundi 1:5\n" +
+//                "INF1500 Lundi 0:0 Mardi 17:35";
 //        string = "7\n" +
 //                "Allo Mercredi 13:12 Mercredi 17:29\n" +
-//                "Sddff Mercredi 10:10 Mercredi 16:11\n"+
+//                "Sddff Mercredi 10:10 Mercredi 16:11\n" +
 //                "INF1005C Lundi 12:45 Lundi 13:45\n" +
 //                "INF1500 Lundi 13:45 Lundi 14:45\n" +
 //                "INF1040 Lundi 13:00 Lundi 14:00\n" +
-//                "INF2010 Mardi 13:00 Mardi 15:00\n" +
-//                "INF2020 Mardi 13:00 Mardi 16:00";
+//                "INF2010 Dimanche 13:00 Dimanche 15:01\n" +
+//                "INF2020 Dimanche 15:00 Dimanche 16:00";
         Solution conflitHoraire = new Solution(string);
     }
-    public Solution(String string){
 
-
+    public Solution(String string) {
 
 
         String[] lineList = string.split("\n");
@@ -68,53 +67,40 @@ public class Solution {
                 Cours conflict = new Cours();
 
 
+                Rectangle r1 = new Rectangle(start1, 0, end1 - start1, 100);
+                Rectangle r2 = new Rectangle(start2, 0, end2 - start2, 100);
+                if (r1.intersects(r2)) {
 
-                if (start1 >= start2 && start1 <= end2) {
-                    hasConflict = true;
-                    conflict.setStart(start1);
+                    Rectangle rectangle = r1.intersection(r2);
+                    if (rectangle.width != 0) {
+                        hasConflict = true;
+                        conflict.setStart(rectangle.x);
+                        conflict.setEnd(rectangle.x + rectangle.width);
 
-                }
-                else if (start2 >= start1 && start2 <= end1) {
-                    hasConflict = true;
-                    conflict.setStart(start2);
-                }
-
-                if (end1 >= start2 && end1 <= end2) {
-                    hasConflict = true;
-                    conflict.setEnd(end1);
-
-                }
-                else if (end2 >= start1 && end2 <= end1) {
-                    hasConflict = true;
-                    conflict.setEnd(end2);
-                }
-
-
-                if (!conflict.isEmpty()){
-                    conflictList.add(conflict);
+                        if (!conflict.isEmpty()) {
+                            conflictList.add(conflict);
+                        }
+                    }
                 }
 
             }
         }
 
 
-
-
-
         for (int i = 0; i < conflictList.size(); i++) {
             Cours conflict1 = conflictList.get(i);
-            for (int j = 0; j < conflictList.size() - 1; j++) {
+            for (int j = i + 1; j < conflictList.size(); j++) {
                 Cours conflict2 = conflictList.get(j);
                 if (conflict1.getEnd().equals(conflict2.getStart())) {
                     Cours newConflict = new Cours(conflict1.getStart(), conflict2.getEnd());
                     conflictList.remove(i);
-                    conflictList.remove(i);
+                    conflictList.remove(j-1);
                     conflictList.add(newConflict);
                 }
-                else if (conflict1.getStart().equals(conflict2.getEnd())){
+                else if (conflict1.getStart().equals(conflict2.getEnd())) {
                     Cours newConflict = new Cours(conflict2.getStart(), conflict1.getEnd());
                     conflictList.remove(i);
-                    conflictList.remove(i);
+                    conflictList.remove(j-1);
                     conflictList.add(newConflict);
 
                 }
@@ -140,11 +126,6 @@ public class Solution {
     }
 
 
-
-
-
-
-
     public static void printConfList(ArrayList<Cours> conflictList) {
         for (int k = 0; k < conflictList.size(); k++) {
             String confli1[] = conflictList.get(k).getStart().getStringTime();//toStringTime(conflictList.get(k)[0]);
@@ -156,13 +137,14 @@ public class Solution {
     }
 
 
-    public class Cours implements  Comparable{
+    public class Cours implements Comparable {
         private Time start = new Time(), end = new Time();
 
 
-        public Cours(){
+        public Cours() {
 
         }
+
         public Cours(Time start, Time end) {
             this.start = start;
             this.end = end;
@@ -171,7 +153,8 @@ public class Solution {
         public Cours(int start, int end) {
             this(new Time(start), new Time(end));
         }
-        boolean isEmpty(){
+
+        boolean isEmpty() {
             return start.equals(end);
         }
 
@@ -180,9 +163,10 @@ public class Solution {
             return start;
         }
 
-        public void setStart(int start){
+        public void setStart(int start) {
             setStart(new Time(start));
         }
+
         public void setStart(Time start) {
             this.start = start;
         }
@@ -213,22 +197,30 @@ public class Solution {
 
             return this.getStart().compareTo(b.getStart());
         }
+
+        @Override
+        public String toString() {
+            return "Cours{" +
+                    "start=" + start +
+                    ", end=" + end +
+                    '}';
+        }
     }
 
-    public class Time implements  Comparable{
+    public class Time implements Comparable {
         private int timeNb = 0;
 
-        public Time(){
+        public Time() {
 
         }
-        public Time(int timeNb){
+
+        public Time(int timeNb) {
             setTimeNb(timeNb);
         }
 
         public Time(String timeStr[]) {
             setTimeNb(timeStr);
         }
-
 
 
         public int setTimeNb(String timeString[]) {
@@ -268,9 +260,10 @@ public class Solution {
             return time;
         }
 
-        public String[] getStringTime(){
+        public String[] getStringTime() {
             return toStringTime(getTimeNb());
         }
+
         public String[] toStringTime(int time) {
             int day = time / (24 * 60);
 
@@ -305,17 +298,15 @@ public class Solution {
             int min = timeInDay - (hour * 60);
 
             String res[] = {dayString, hour + ":" + min};
-            if(min == 0){
-                res[1] += "0";
+            if (min < 10) {
+                res[1] = hour + ":0" + min;
             }
-            if(hour == 0){
+            if (hour < 10) {
                 res[1] = "0" + res[1];
             }
             return res;
 
         }
-
-
 
 
         public int getTimeNb() {
@@ -337,6 +328,11 @@ public class Solution {
             Integer b = ((Time) o).getTimeNb();
 
             return a.compareTo(b);
+        }
+
+        @Override
+        public String toString() {
+            return getTimeNb() + " (" + getStringTime()[0] + " " + getStringTime()[1] + ")";
         }
     }
 }
