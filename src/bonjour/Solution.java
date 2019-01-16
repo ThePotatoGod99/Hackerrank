@@ -1,10 +1,13 @@
+package bonjour;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Solution {
+    private long startTime = System.nanoTime();
+
     public static void main(String[] args) {
         String input;
-
 
 
 //        input = "{\n" +
@@ -38,7 +41,6 @@ public class Solution {
 //                "}";
 
 
-
         input = "";
         Scanner scan = new Scanner(System.in);
 
@@ -50,6 +52,14 @@ public class Solution {
 
     }
 
+    public void instable() {
+        if (System.nanoTime() - startTime >= 3e9) {
+            System.out.println("instable");
+            System.exit(0);
+        }
+
+    }
+
     public Solution(String in) {
         JSONObj obj1 = new JSONObj(in);
         JSONObj obj = obj1.getJSONObjectList().get(0);
@@ -58,28 +68,32 @@ public class Solution {
         JSONArray logiqueObj = (JSONArray) obj.getObjectByName("logique");
         JSONArray filsObj = (JSONArray) obj.getObjectByName("fils");
         ArrayList<JSONObj> basculeList = (ArrayList<JSONObj>) basculeObj.getObject();
-        ArrayList<JSONObj> filsList =  filsObj.getObject();
-        ArrayList<JSONObj> logiqueList =  logiqueObj.getObject();
+        ArrayList<JSONObj> filsList = filsObj.getObject();
+        ArrayList<JSONObj> logiqueList = logiqueObj.getObject();
 
         //starts//
-        ArrayList<JSONObj> startList = new ArrayList<JSONObj>();
+        ArrayList<JSONObj> startList = new ArrayList<>();
         for (JSONObj fil : filsList) {
             for (Object bascule : basculeList) {
                 Object inObject = fil.getObjectByName("in").getObject();
                 if (bascule.equals(inObject)) {
                     startList.add(fil);
+
                 }
+                instable();
             }
         }
 
+
         //ends//
-        ArrayList<JSONObj> endList = new ArrayList<JSONObj>();
+        ArrayList<JSONObj> endList = new ArrayList<>();
         for (JSONObj fil : filsList) {
             for (Object bascule : basculeList) {
                 Object inObject = fil.getObjectByName("out").getObject();
                 if (bascule.equals(inObject)) {
                     endList.add(fil);
                 }
+                instable();
             }
         }
 
@@ -91,14 +105,18 @@ public class Solution {
                 if (delay > maxDelay) {
                     maxDelay = delay;
                 }
+                instable();
             }
         }
-
         int frequence = (int) ((1.0 / maxDelay) * 1000.0);
+
         System.out.println(frequence);
+
+
     }
 
     public int calculateDelay(ArrayList<JSONObj> filsList, ArrayList<JSONObj> logiqueList, JSONObj startingPoint, JSONObj endPoint) {
+        instable();
         int delay = 0;
         delay += (Integer) startingPoint.getObjectByName("delais").getObject();
 
@@ -108,10 +126,14 @@ public class Solution {
         }
 
         String outName = (String) startingPoint.getObjectByName("out").getObject();
+        if (outName.equals(endPoint.getObjectByName("out").getObject())) {
+            return delay;
+        }
 
         ArrayList<JSONObj> inList = findInByName(outName, filsList);
         int maxDelay = 0;
         for (JSONObj in : inList) {
+            instable();
             int tempDelay = calculateDelay(filsList, logiqueList, in, endPoint);
             if (tempDelay > maxDelay) {
                 maxDelay = tempDelay;
@@ -126,6 +148,7 @@ public class Solution {
     public ArrayList<JSONObj> findInByName(String name, ArrayList<JSONObj> filsList) {
         ArrayList<JSONObj> inList = new ArrayList<>();
         for (JSONObj fil : filsList) {
+            instable();
             Object inObject = fil.getObjectByName("in").getObject();
             if (name.equals(inObject)) {
                 inList.add(fil);
@@ -136,6 +159,7 @@ public class Solution {
 
     public JSONObj findLogiqueByName(String name, ArrayList<JSONObj> logiqueList) {
         for (JSONObj logique : logiqueList) {
+            instable();
             if (logique.getObjectByName("nom").getObject().equals(name)) {
                 return logique;
             }
@@ -203,6 +227,7 @@ public class Solution {
 
         public JSONObj getObjectByName(String objectName) {
             for (JSONObj object : getJSONObjectList()) {
+                instable();
                 if (object.getName().equals(objectName)) {
                     return object;
                 }
@@ -339,8 +364,8 @@ public class Solution {
             setObject(list);
         }
 
-        public ArrayList<Object> getObject() {
-            return (ArrayList<Object>) super.getObject();
+        public ArrayList<JSONObj> getObject() {
+            return (ArrayList<JSONObj>) super.getObject();
         }
     }
 

@@ -2,6 +2,7 @@ package conflicts;
 
 import java.util.*;
 
+
 public class Solution {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
@@ -10,11 +11,15 @@ public class Solution {
         while (scan.hasNextLine()) {
             string += scan.nextLine() + "\n";
         }
-//
+
+
+
 //        String string = "2\n" +
 //                "INF1005C Lundi 12:45 Lundi 13:35\n" +
 //                "INF1500 Mardi 14:45 Mardi 17:35";
-//        string = "5\n" +
+//        string = "7\n" +
+//                "Allo Mercredi 13:12 Mercredi 17:29\n" +
+//                "Sddff Mercredi 10:10 Mercredi 16:11\n"+
 //                "INF1005C Lundi 12:45 Lundi 13:45\n" +
 //                "INF1500 Lundi 13:45 Lundi 14:45\n" +
 //                "INF1040 Lundi 13:00 Lundi 14:00\n" +
@@ -27,13 +32,12 @@ public class Solution {
 
 
 
-        String[] lineList = string.split(System.getProperty("line.separator"));
+        String[] lineList = string.split("\n");
         int N = Integer.parseInt(lineList[0]);
         ArrayList<Cours> courseList = new ArrayList<>();
 
 
         for (int i = 1; i <= N; i++) {
-//        int i = 1;
             String[] lineSeparated = lineList[i].split(" ");
 
             String startString[] = {lineSeparated[1], lineSeparated[2]};
@@ -45,8 +49,6 @@ public class Solution {
 
             Cours courseTime = new Cours(startTime, endTime);
             courseList.add(courseTime);
-
-
         }
 
 
@@ -55,43 +57,34 @@ public class Solution {
         ArrayList<Cours> conflictList = new ArrayList<>();
 
         for (int i = 0; i < courseList.size(); i++) {
-//            int i = 0;
             Cours courseTime = courseList.get(i);
             int start1 = courseTime.getStart().getTimeNb();
             int end1 = courseTime.getEnd().getTimeNb();
             for (int j = i + 1; j < courseList.size(); j++) {
-//            int j = i + 1;
                 Cours courseTime2 = courseList.get(j);
 
                 int start2 = courseTime2.getStart().getTimeNb();
                 int end2 = courseTime2.getEnd().getTimeNb();
                 Cours conflict = new Cours();
 
-                if (end1 > start2) {
-                    hasConflict = true;
-                }
 
 
                 if (start1 >= start2 && start1 <= end2) {
-//                    System.out.println(start1 + " : " + start2);
                     hasConflict = true;
                     conflict.setStart(start1);
 
                 }
                 else if (start2 >= start1 && start2 <= end1) {
-//                    System.out.println(start1 + " : " + start2);
                     hasConflict = true;
                     conflict.setStart(start2);
                 }
 
                 if (end1 >= start2 && end1 <= end2) {
-//                    System.out.println(end1 + " : " + end2);
                     hasConflict = true;
                     conflict.setEnd(end1);
 
                 }
                 else if (end2 >= start1 && end2 <= end1) {
-//                    System.out.println(end1 + " : " + end2);
                     hasConflict = true;
                     conflict.setEnd(end2);
                 }
