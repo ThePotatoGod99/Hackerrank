@@ -1,6 +1,7 @@
 package bonjour;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,7 +10,7 @@ public class Solution {
         String input;
 
 
-        /*
+
         input = "{\n" +
                 "    \"bascule\" : [\"IN1\", \"IN2\", \"OUT1\", \"OUT2\"],\n" +
                 "    \"logique\" : [\n" +
@@ -39,15 +40,15 @@ public class Solution {
                 "        {\"in\" : \"XOR4\", \"out\" : \"OUT2\", \"delais\" : 1}\n" +
                 "    ]\n" +
                 "}";
-        */
 
 
-        input = "";
-        Scanner scan = new Scanner(System.in);
-
-        while (scan.hasNextLine()) {
-            input += scan.nextLine() + "\n";
-        }
+//
+//        input = "";
+//        Scanner scan = new Scanner(System.in);
+//
+//        while (scan.hasNextLine()) {
+//            input += scan.nextLine() + "\n";
+//        }
 
         new Solution(input);
 
@@ -57,12 +58,12 @@ public class Solution {
         JSONObj obj1 = new JSONObj(in);
         JSONObj obj = obj1.getJSONObjectList().get(0);
 
-        JSONObj basculeObj = obj.getObjectByName("bascule");
-        JSONObj logiqueObj = obj.getObjectByName("logique");
-        JSONObj filsObj = obj.getObjectByName("fils");
-        ArrayList<Object> basculeList = (ArrayList<Object>) basculeObj.getObject();
-        ArrayList<JSONObj> filsList = (ArrayList<JSONObj>) filsObj.getObject();
-        ArrayList<JSONObj> logiqueList = (ArrayList<JSONObj>) logiqueObj.getObject();
+        JSONArray basculeObj = (JSONArray) obj.getObjectByName("bascule");
+        JSONArray logiqueObj = (JSONArray) obj.getObjectByName("logique");
+        JSONArray filsObj = (JSONArray) obj.getObjectByName("fils");
+        ArrayList<JSONObj> basculeList = (ArrayList<JSONObj>) basculeObj.getObject();
+        ArrayList<JSONObj> filsList =  filsObj.getObject();
+        ArrayList<JSONObj> logiqueList =  logiqueObj.getObject();
 
         //starts//
         ArrayList<JSONObj> startList = new ArrayList<JSONObj>();
@@ -342,6 +343,9 @@ public class Solution {
             setObject(list);
         }
 
+        public ArrayList<JSONObj> getObject() {
+            return (ArrayList<JSONObj>) super.getObject();
+        }
     }
 
 }
