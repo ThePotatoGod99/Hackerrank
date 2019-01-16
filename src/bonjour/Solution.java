@@ -343,8 +343,8 @@ public class Solution {
             setObject(list);
         }
 
-        public ArrayList<JSONObj> getObject() {
-            return (ArrayList<JSONObj>) super.getObject();
+        public ArrayList<Object> getObject() {
+            return (ArrayList<Object>) super.getObject();
         }
     }
 
